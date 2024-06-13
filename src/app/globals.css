@@ -1,4 +1,25 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .h1 {
+    @apply text-4xl text-zinc-800 dark:text-zinc-50 font-semibold leading-none tracking-tight;
+  }
+  .h2 {
+    @apply text-xl text-zinc-800 dark:text-zinc-50 font-semibold leading-none tracking-tight;
+  }
+  .h3 {
+    @apply text-zinc-800 dark:text-zinc-50 font-semibold leading-none tracking-tight;
+  }
+  .text {
+    @apply text-zinc-800 dark:text-zinc-50 font-medium tracking-tight;
+  }
+  .text-secondary {
+    @apply text-zinc-400 dark:text-zinc-400 font-normal leading-none tracking-tight;
+  }
+
+  .product-card-title {
+    @apply text-base text-zinc-800 dark:text-zinc-50 font-semibold;
+  }
+}
