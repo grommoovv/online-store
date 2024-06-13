@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { FC } from 'react'
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
-import { FilterByStatusVariants, StatusEnum } from '@/app/catalog/page'
+import { FilterByStatusVariants, StatusEnum } from '@/lib/constants'
 
 interface FilterProps {
   variants: FilterByStatusVariants[]
