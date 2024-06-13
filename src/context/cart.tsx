@@ -26,16 +26,16 @@ export const useCartContext = () => {
   return ctx
 }
 
-export const CartContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const getCount = (products: CartProduct[]): number => {
-    return products.reduce((total, product) => total + product.quantity, 0)
-  }
+const getCount = (products: CartProduct[]): number => {
+  return products.reduce((total, product) => total + product.quantity, 0)
+}
 
-  const getAmount = (products: CartProduct[]): number => {
-    return products.reduce((acc, product) => acc + product.price * product.quantity, 0)
-  }
+const getAmount = (products: CartProduct[]): number => {
+  return products.reduce((acc, product) => acc + product.price * product.quantity, 0)
+}
 
-  const [cart, setCart] = useState<Cart>(() => {
+const getInitialCart = (): Cart => {
+  if (typeof window !== 'undefined') {
     const storage = localStorage.getItem(LOCAL_STORAGE_KEYS.CART)
     const initialCart = storage
       ? JSON.parse(storage)
@@ -48,12 +48,24 @@ export const CartContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     initialCart.count = getCount(initialCart.products)
     initialCart.amount = getAmount(initialCart.products)
-
     return initialCart
-  })
+  }
+
+  return {
+    products: [],
+    count: 0,
+    amount: 0,
+    updated_at: new Date(Date.now()),
+  }
+}
+
+export const CartContextProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [cart, setCart] = useState<Cart>(getInitialCart)
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEYS.CART, JSON.stringify(cart))
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(LOCAL_STORAGE_KEYS.CART, JSON.stringify(cart))
+    }
   }, [cart])
 
   const toggleProduct = (product: Product) => {
